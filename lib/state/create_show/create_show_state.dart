@@ -1,35 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:pumped/models/slide.dart';
+import 'package:pumped/models/track.dart';
+import 'package:uuid/uuid.dart';
 
 class CreateShowState extends Equatable {
+  final Track? track;
   final List<Slide> slides;
+  final Slide titleSlide;
   final int currentSlide;
+  final String uid;
 
-  const CreateShowState(this.slides, this.currentSlide);
+  const CreateShowState(
+      this.uid, this.slides, this.currentSlide, this.titleSlide,
+      [this.track]);
 
   @override
-  List<Object?> get props => [slides, currentSlide];
-
-  // @override
-  // bool operator ==(other) {
-  //   print('in equals');
-  //   print(other is CreateShowState &&
-  //       other.slides.equals(slides) &&
-  //       currentSlide == currentSlide);
-
-  //   return other is CreateShowState &&
-  //       other.slides.equals(slides) &&
-  //       currentSlide == currentSlide;
-  // }
-
-  // @override
-  // int get hashCode =>
-  //     super.hashCode +
-  //     currentSlide.hashCode +
-  //     slides.fold(0, (l, s) => l + s.hashCode);
+  List<Object?> get props => [uid, slides, currentSlide, titleSlide, track];
 }
 
 class LoadingCreateShowState extends CreateShowState {
-  const LoadingCreateShowState(List<Slide> slides, int currentSlide)
-      : super(slides, currentSlide);
+  const LoadingCreateShowState(
+      String uid, List<Slide> slides, int currentSlide, Slide titleSlide,
+      [Track? track])
+      : super(uid, slides, currentSlide, titleSlide, track);
 }

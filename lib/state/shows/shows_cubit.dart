@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pumped/models/show.dart';
+import 'package:pumped/models/slide.dart';
 import 'package:pumped/state/shows/shows_repo.dart';
 import 'package:pumped/state/shows/shows_state.dart';
 

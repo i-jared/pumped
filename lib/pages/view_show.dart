@@ -5,15 +5,24 @@ import 'package:pumped/imports.dart';
 import 'package:pumped/models/show.dart';
 import 'package:pumped/models/slide.dart';
 
-class ViewShow extends StatelessWidget {
+class ViewShow extends StatefulWidget {
   final Show show;
   const ViewShow(this.show, {super.key});
+  @override
+  State<StatefulWidget> createState() => _ViewShowState();
+}
+
+class _ViewShowState extends State<ViewShow> {
+  @override
+  void didChangeDependencies() {
+    widget.show.slides.forEach(precache);
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    logger.wtf(height);
-    logger.wtf(width);
     return Scaffold(
       body: CarouselSlider.builder(
           options: CarouselOptions(
@@ -21,9 +30,9 @@ class ViewShow extends StatelessWidget {
             enableInfiniteScroll: false,
             height: height,
           ),
-          itemCount: show.slides.length,
+          itemCount: widget.show.slides.length,
           itemBuilder: (context, i, ri) {
-            final slide = show.slides[i];
+            final slide = widget.show.slides[i];
             late Widget child;
             switch (slide.runtimeType) {
               case (TextSlide):
@@ -50,5 +59,11 @@ class ViewShow extends StatelessWidget {
             return child;
           }),
     );
+  }
+
+  void precache(slide) {
+    if (slide is ImageSlide) {
+      precacheImage(FileImage(slide.image!), context);
+    }
   }
 }

@@ -18,7 +18,7 @@ class CreateSlide extends StatelessWidget {
         ? null
         : createShowCubit.state.slides[i];
     return <Widget>[
-      const SizedBox(height: 20),
+      const SizedBox(height: 150),
       if (slide != null) _buildPreview(context),
       if (slide == null) _buildChooseSlide(context),
       const SizedBox(height: 20),
