@@ -11,4 +11,11 @@ class LoadingShowsState extends ShowsState {}
 class LoadedShowsState extends ShowsState {
   final List<Show> shows;
   LoadedShowsState(this.shows);
+
+  @override
+  List<Object?> get props => [shows];
+}
+
+class EditingShowsState extends LoadedShowsState {
+  EditingShowsState(List<Show> shows) : super(shows);
 }

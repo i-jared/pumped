@@ -6,30 +6,23 @@ part 'show.g.dart';
 
 @HiveType(typeId: 0)
 class Show {
-  @HiveField(3)
-  String uid;
   @HiveField(0)
   Slide titleSlide;
   @HiveField(1)
-  List<Slide> slides;
+  List<Slide?> slides;
   @HiveField(2)
   Track? track;
-  Show(this.uid, this.titleSlide, this.slides, [this.track]);
-  //TODO: add song;
-}
-
-class TrackAdapter extends TypeAdapter<Track> {
-  @override
-  Track read(BinaryReader reader) {
-    // TODO: implement read
-    throw UnimplementedError();
-  }
+  @HiveField(3)
+  String uid;
+  @HiveField(4)
+  double songStartRatio;
+  @HiveField(5)
+  double songEndRatio;
+  Show(this.uid, this.titleSlide, this.slides,
+      [this.track, this.songStartRatio = 0.0, this.songEndRatio = 1.0]);
 
   @override
-  int get typeId => 102;
-
-  @override
-  void write(BinaryWriter writer, Track obj) {
-    // TODO: implement write
+  String toString() {
+    return '{uid: $uid}';
   }
 }

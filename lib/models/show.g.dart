@@ -21,21 +21,27 @@ class ShowAdapter extends TypeAdapter<Show> {
       fields[0] as Slide,
       (fields[1] as List).cast<Slide>(),
       fields[2] as Track?,
+      fields[4] as double,
+      fields[5] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, Show obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(3)
-      ..write(obj.uid)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.titleSlide)
       ..writeByte(1)
       ..write(obj.slides)
       ..writeByte(2)
-      ..write(obj.track);
+      ..write(obj.track)
+      ..writeByte(3)
+      ..write(obj.uid)
+      ..writeByte(4)
+      ..write(obj.songStartRatio)
+      ..writeByte(5)
+      ..write(obj.songEndRatio);
   }
 
   @override

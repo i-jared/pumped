@@ -5,10 +5,10 @@ import 'package:pumped/models/track.dart';
 import 'package:pumped/services/http_client.dart';
 import 'package:spotify_sdk/spotify_sdk.dart';
 
-class AuthRepo {
+class MusicRepo {
   final Box _box;
   final String tokenString = 'token';
-  AuthRepo() : _box = Hive.box(hiveBoxName);
+  MusicRepo() : _box = Hive.box(hiveBoxName);
   Map<String, String> authHeader(String accessToken) {
     return {'Authorization': 'Bearer $accessToken'};
   }
