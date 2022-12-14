@@ -72,24 +72,30 @@ class _CreateSlideState extends State<CreateSlide> {
     final slide = createShowCubit.state.slides[i];
     return [
       (slide is TextSlide
-              ? AutoSizeTextField(
-                  focusNode: _focusNode,
-                  scrollPadding: EdgeInsets.zero,
-                  decoration: const InputDecoration(border: InputBorder.none),
-                  cursorColor: slide.textColor,
-                  cursorWidth: 5,
-                  maxLength: 100,
-                  maxLines: null,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  controller: _textController,
-                  onChanged: (val) => createShowCubit.updateSlide(i, text: val),
-                  presetFontSizes: const [80, 60, 40, 20],
-                  style: TextStyle(fontSize: 80, color: slide.textColor),
-                  textAlign: TextAlign.center,
+              ? GestureDetector(
+                  onTap: () => _focusNode.requestFocus(),
+                  onLongPress: () => setState(() => _editing = true),
+                  child: AbsorbPointer(
+                    child: AutoSizeTextField(
+                      wrapWords: false,
+                      focusNode: _focusNode,
+                      scrollPadding: EdgeInsets.zero,
+                      decoration:
+                          const InputDecoration(border: InputBorder.none),
+                      cursorColor: slide.textColor,
+                      cursorWidth: 5,
+                      maxLength: 100,
+                      maxLines: null,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      controller: _textController,
+                      onChanged: (val) =>
+                          createShowCubit.updateSlide(i, text: val),
+                      presetFontSizes: const [80, 60, 40, 20],
+                      style: TextStyle(fontSize: 80, color: slide.textColor),
+                      textAlign: TextAlign.center,
+                    ).center().padding(vertical: 75),
+                  ),
                 )
-                  // .gestures(onLongPress: () => setState(() => _editing = true))
-                  .center()
-                  .padding(vertical: 75)
               : slide is ImageSlide && slide.image == null
                   ? ([
                       IconButton(

@@ -137,24 +137,7 @@ class TitleModal extends StatelessWidget {
     ]
         .toColumn(mainAxisAlignment: MainAxisAlignment.center)
         .opacity(animate: true, (state.titleSlide is TextSlide) ? 1 : 0)
-        .animate(Duration(milliseconds: 200), Curves.linear);
-  }
-
-  Widget _buildImageEntry(BuildContext context, ImageSlide slide) {
-    final createShowCubit = context.read<CreateShowCubit>();
-    return [
-      Container().height(30).width(30).decorated(
-          color: Colors.white,
-          borderRadius: slide.image == null ? null : BorderRadius.circular(15),
-          image: slide.image == null
-              ? null
-              : DecorationImage(
-                  image: FileImage(slide.image!), fit: BoxFit.cover)),
-      const SizedBox(width: 15),
-      const Text('Select Image'),
-    ].toRow().padding(horizontal: 50).gestures(onTap: () async {
-      createShowCubit.pickImage(-1);
-    });
+        .animate(const Duration(milliseconds: 200), Curves.linear);
   }
 
   void showColorPicker(

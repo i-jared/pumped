@@ -41,6 +41,7 @@ class _CreateShowPageState extends State<CreateShowPage> {
     return Scaffold(
             resizeToAvoidBottomInset: true,
             body: NestedScrollView(
+                physics: const ClampingScrollPhysics(),
                 controller: _scrollController,
                 headerSliverBuilder: (context, isScrolled) => [
                       CreateShowAppBar(
@@ -67,7 +68,6 @@ class _CreateShowPageState extends State<CreateShowPage> {
   Widget _buildCarousel(BuildContext context) {
     final cubit = context.watch<CreateShowCubit>();
     final state = cubit.state;
-    // TODO: make it so you can long press to show remove slide button like ios app
     return LayoutBuilder(
       builder: (context, constraints) => CarouselSlider.builder(
         options: CarouselOptions(

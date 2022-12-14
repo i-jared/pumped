@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pumped/imports.dart';
 import 'package:pumped/models/show.dart';
 import 'package:pumped/services/music_player.dart';
+import 'package:pumped/services/toast.dart';
 import 'package:pumped/state/shows/shows_repo.dart';
 import 'package:pumped/state/shows/shows_state.dart';
 
@@ -65,6 +66,14 @@ class ShowsCubit extends Cubit<ShowsState> {
 
   Future<void> removeShow(Show show) async {
     await showsRepo.removeShow(show);
+    if (state is! EditingShowsState) {
+      showToast('Error removing show');
+      return;
+    }
+    if ((state as EditingShowsState).shows.length == 1) {
+      emit(LoadedShowsState(const []));
+      return;
+    }
     emit(EditingShowsState((state as EditingShowsState)
         .shows
         .where((s) => s.uid != show.uid)

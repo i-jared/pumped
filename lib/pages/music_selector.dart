@@ -82,7 +82,7 @@ class _MusicSelectorState extends State<MusicSelector> {
   }
 
   Widget _buildDefaultError() {
-    return const Text('Something went wrong...').center();
+    return const Text('Something went wrong...').alone();
   }
 
   Widget _buildErrorIndicator() {
