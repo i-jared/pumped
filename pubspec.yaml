@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -50,11 +50,12 @@ flutter:
       - assets/
 
 flutter_icons:
-  image_path_android: "assets/pump_icon.png"
-  adaptive_icon_background: "#000000"
-  image_path_ios: "assets/pump_icon.png"
   android: true
   ios: true
+  image_path_android: "assets/pump_icon_android.png"
+  adaptive_icon_foreground: "assets/pump_icon_android.png"
+  adaptive_icon_background: "#000000"
+  image_path_ios: "assets/pump_icon.png"
   remove_alpha_ios: true
 
 flutter_native_splash:
