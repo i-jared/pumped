@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<MusicAuthCubit>.value(value: getIt<MusicAuthCubit>()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Pumped',
         theme: ThemeData(
           brightness: Brightness.light,
