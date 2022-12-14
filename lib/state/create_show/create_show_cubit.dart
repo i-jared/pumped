@@ -80,6 +80,7 @@ class CreateShowCubit extends Cubit<CreateShowState> {
   Future<void> saveShow() async {
     emit(LoadingCreateShowState.fromCreateShowState(state));
     final showsCubit = getIt<ShowsCubit>();
+    logger.wtf(state.track);
     await showsCubit.saveShow(Show(state.uid, state.titleSlide, state.slides,
         state.track, state.songStartRatio, state.songEndRatio));
     emit(CreateShowState.fromCreateShowState(state));

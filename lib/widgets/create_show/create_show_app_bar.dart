@@ -200,8 +200,11 @@ class _CreateShowAppBarState extends State<CreateShowAppBar>
                                 child: [
                                   Container().height(20).width(20).decorated(
                                       color:
-                                          (cubit.state.titleSlide as TextSlide)
-                                              .backgroundColor,
+                                          (cubit.state.titleSlide is TextSlide)
+                                              ? (cubit.state.titleSlide
+                                                      as TextSlide)
+                                                  .backgroundColor
+                                              : Colors.black,
                                       border: Border.all(
                                           color: Colors.black, width: 1),
                                       borderRadius: BorderRadius.circular(15)),
@@ -231,8 +234,11 @@ class _CreateShowAppBarState extends State<CreateShowAppBar>
                                 child: [
                                   Container().height(20).width(20).decorated(
                                       color:
-                                          (cubit.state.titleSlide as TextSlide)
-                                              .textColor,
+                                          (cubit.state.titleSlide is TextSlide)
+                                              ? (cubit.state.titleSlide
+                                                      as TextSlide)
+                                                  .textColor
+                                              : Colors.black,
                                       border: Border.all(
                                           color: Colors.black, width: 1),
                                       borderRadius: BorderRadius.circular(15)),
@@ -268,7 +274,7 @@ class _CreateShowAppBarState extends State<CreateShowAppBar>
                                     cubit.updateTitle(ImageSlide());
                                     cubit.pickImage(-1);
                                   },
-                                  child: Icon(Icons.image, size: 25))),
+                                  child: const Icon(Icons.image, size: 25))),
                         ),
                         Positioned(
                           bottom: sin(textRad) * 40 + 30,
@@ -280,12 +286,15 @@ class _CreateShowAppBarState extends State<CreateShowAppBar>
                                     controller.reverse();
                                     Future.delayed(
                                         const Duration(milliseconds: 200), () {
-                                      cubit.updateTitle(
-                                          cubit.state.titleSlide as TextSlide);
+                                      if (!isText) {
+                                        cubit.updateTitle(TextSlide('Untitled',
+                                            Colors.white, Colors.black));
+                                      }
                                       controller2.forward();
                                     });
                                   },
-                                  child: Icon(Icons.text_increase, size: 25))),
+                                  child: const Icon(Icons.text_increase,
+                                      size: 25))),
                         ),
                       ],
                     )

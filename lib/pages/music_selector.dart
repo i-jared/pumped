@@ -87,7 +87,7 @@ class _MusicSelectorState extends State<MusicSelector> {
 
   Widget _buildErrorIndicator() {
     final musicState = context.watch<MusicAuthCubit>().state as ErrorMusicState;
-    return Text(musicState.message).center();
+    return Text(musicState.message).alone();
   }
 
   Widget _buildLoadingIndicator() {
