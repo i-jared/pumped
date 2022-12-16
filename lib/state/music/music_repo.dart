@@ -21,6 +21,7 @@ class MusicRepo {
     final token = await SpotifySdk.getAccessToken(
         clientId: "4e3e62a6d9634ca2a0df0776fe823b57",
         redirectUrl: "pumped://",
+        spotifyUri: "spotify:track:fakeuri",
         scope:
             "app-remote-control,user-modify-playback-state,playlist-read-private");
     await _box.put(tokenString, token);

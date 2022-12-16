@@ -8,11 +8,7 @@ import 'package:spotify_sdk/spotify_sdk.dart';
 class MusicAuthCubit extends Cubit<MusicAuthState> {
   final MusicRepo authRepo;
   MusicAuthCubit(this.authRepo) : super(LoggedOutMusicState()) {
-    autoLogin();
-  }
-
-  void autoLogin() async {
-    await login();
+    login();
   }
 
   Future<void> connectRemote(String accessToken) async {
