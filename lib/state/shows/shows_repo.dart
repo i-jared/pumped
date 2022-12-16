@@ -15,8 +15,7 @@ class ShowsRepo {
   }
 
   Future<Show> saveShow(Show show) async {
-    List<Show>? optShows = List<Show>.from(_box.get(showsKey) ?? []);
-    List<Show> shows = optShows.whereNotNull().toList();
+    List<Show> shows = List<Show>.from(_box.get(showsKey) ?? []);
     int i = shows.indexWhere((s) => s.uid == show.uid);
     if (i >= 0) shows.removeAt(i);
     await _box.put(showsKey, [...shows, show]);
@@ -24,10 +23,15 @@ class ShowsRepo {
   }
 
   Future<void> removeShow(Show show) async {
-    List<Show>? optShows = List<Show>.from(_box.get(showsKey) ?? []);
-    List<Show> shows = optShows.whereNotNull().toList();
+    List<Show> shows = List<Show>.from(_box.get(showsKey) ?? []);
     int i = shows.indexWhere((s) => s.uid == show.uid);
     if (i >= 0) shows.removeAt(i);
     await _box.put(showsKey, shows);
+  }
+
+  Future<Show?> getShowByUid(String uid) async {
+    List<Show> shows = List<Show>.from(_box.get(showsKey) ?? []);
+    Show? show = shows.firstWhereOrNull((s) => s.uid == uid);
+    return show;
   }
 }

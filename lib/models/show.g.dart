@@ -19,7 +19,7 @@ class ShowAdapter extends TypeAdapter<Show> {
     return Show(
       fields[3] as String,
       fields[0] as Slide,
-      (fields[1] as List).cast<Slide>(),
+      (fields[1] as List).cast<Slide?>(),
       fields[2] as Track?,
       fields[4] as double,
       fields[5] as double,

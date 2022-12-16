@@ -9,21 +9,23 @@ class MusicAuthCubit extends Cubit<MusicAuthState> {
   final MusicRepo authRepo;
   MusicAuthCubit(this.authRepo) : super(LoggedOutMusicState()) {
     autoLogin();
-    connectRemote();
   }
 
-  void autoLogin() {
-    final String? token = authRepo.retrieveToken();
-    if (token != null) emit(LoggedInMusicState(token));
+  void autoLogin() async {
+    await login();
   }
 
-  void connectRemote() async {
+  Future<void> connectRemote(String accessToken) async {
     await SpotifySdk.connectToSpotifyRemote(
-        clientId: '4e3e62a6d9634ca2a0df0776fe823b57', redirectUrl: 'pumped://');
+        accessToken: accessToken,
+        clientId: '4e3e62a6d9634ca2a0df0776fe823b57',
+        redirectUrl: 'pumped://',
+        spotifyUri: "spotify:track:fakeuri");
   }
 
   Future<void> login() async {
     final accessToken = await authRepo.login();
+    await connectRemote(accessToken);
     emit(LoggedInMusicState(accessToken));
   }
 

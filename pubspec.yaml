@@ -34,6 +34,8 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_native_splash: ^2.2.16
   fluttertoast: ^8.1.2
+  flutter_local_notifications: ^12.0.4
+  flutter_native_timezone: ^2.0.0
 
 dev_dependencies:
   flutter_test:

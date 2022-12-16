@@ -4,15 +4,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pumped/imports.dart';
+import 'package:pumped/models/my_notification.dart';
 import 'package:pumped/models/show.dart';
 import 'package:pumped/models/slide.dart';
 import 'package:pumped/models/track.dart';
 import 'package:pumped/pages/create_show.dart';
 import 'package:pumped/pages/view_show.dart';
+import 'package:pumped/services/my_router.dart';
 import 'package:pumped/state/music/music_cubit.dart';
 import 'package:pumped/state/create_show/create_show_cubit.dart';
+import 'package:pumped/state/notify/notify_cubit.dart';
 import 'package:pumped/state/shows/shows_cubit.dart';
 import 'package:pumped/state/shows/shows_state.dart';
+import 'package:pumped/widgets/home/my_drawer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +28,9 @@ void main() async {
   Hive.registerAdapter(ColorAdapter());
   Hive.registerAdapter(FileAdapter());
   Hive.registerAdapter(TrackAdapter());
+  Hive.registerAdapter(DayAdapter());
+  Hive.registerAdapter(TimeAdapter());
+  Hive.registerAdapter(MyNotificationAdapter());
   await Hive.openBox(hiveBoxName);
   init();
   runApp(const MyApp());
@@ -38,8 +45,10 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<ShowsCubit>.value(value: getIt<ShowsCubit>()),
         BlocProvider<MusicAuthCubit>.value(value: getIt<MusicAuthCubit>()),
+        BlocProvider<NotifyCubit>.value(value: getIt<NotifyCubit>()),
       ],
       child: MaterialApp(
+        navigatorKey: MyRouter.navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Pumped',
         theme: ThemeData(
@@ -73,33 +82,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final slidesCubit = context.watch<ShowsCubit>();
     return Scaffold(
-      drawer: Drawer(
-          width: 100,
-          backgroundColor: Colors.black,
-          child: Column(
-            children: [
-              DrawerHeader(child: const Text('🔥').fontSize(50)),
-              IconButton(
-                onPressed: () => null,
-                icon: const Icon(Icons.alarm, color: Colors.white),
-              ),
-              const Divider(color: Colors.grey),
-              IconButton(
-                icon: const Icon(Icons.rocket, color: Colors.white),
-                onPressed: () => null,
-              ),
-              const Divider(color: Colors.grey),
-              IconButton(
-                icon: const Icon(Icons.search, color: Colors.white),
-                onPressed: () => null,
-              ),
-              const Divider(color: Colors.grey),
-              IconButton(
-                icon: const Icon(Icons.settings, color: Colors.white),
-                onPressed: () => null,
-              ),
-            ],
-          )),
+      drawer: const MyDrawer(),
       body: CustomScrollView(
         physics: const ClampingScrollPhysics(),
         slivers: [

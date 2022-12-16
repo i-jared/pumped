@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:pumped/models/track.dart';
 import 'package:pumped/widgets/painters/triangle_painter.dart';
 import 'package:flutter/material.dart';
@@ -105,22 +106,29 @@ class _TracksViewState extends State<TracksView> {
         CustomPaint(
           painter: TrianglePainter(color: Colors.yellow),
           child: const SizedBox(height: 40, width: 20),
-        ).gestures(onHorizontalDragUpdate: (details) {
-          final double startRatio =
-              (details.globalPosition.dx - 75) / (width - 150);
-          createShowCubit.updateSong(songStartRatio: startRatio);
-          // move below to update song
-        }).positioned(
-            left: (width - 150) * createShowState.songStartRatio + 45),
+        )
+            .gestures(
+                dragStartBehavior: DragStartBehavior.down,
+                onHorizontalDragUpdate: (details) {
+                  final double startRatio =
+                      (details.globalPosition.dx - 75) / (width - 150);
+                  createShowCubit.updateSong(songStartRatio: startRatio);
+                  // move below to update song
+                })
+            .positioned(
+                left: (width - 150) * createShowState.songStartRatio + 45),
         CustomPaint(
                 painter: TrianglePainter(color: Colors.yellow, reverse: true),
                 child: const SizedBox(height: 40, width: 20))
-            .gestures(onHorizontalDragUpdate: (details) {
-          final double endRatio =
-              (details.globalPosition.dx - 75) / (width - 150);
-          createShowCubit.updateSong(songEndRatio: endRatio);
-          // move below to update song
-        }).positioned(
+            .gestures(
+                dragStartBehavior: DragStartBehavior.down,
+                onHorizontalDragUpdate: (details) {
+                  final double endRatio =
+                      (details.globalPosition.dx - 75) / (width - 150);
+                  createShowCubit.updateSong(songEndRatio: endRatio);
+                  // move below to update song
+                })
+            .positioned(
                 right:
                     (width - 150) * (1.0 - createShowState.songEndRatio) + 45),
       ].toStack().height(40).width(width),
