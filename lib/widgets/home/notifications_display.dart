@@ -1,7 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -13,6 +11,7 @@ import 'package:pumped/state/notify/notify_cubit.dart';
 import 'package:pumped/state/notify/notify_state.dart';
 import 'package:pumped/state/shows/shows_cubit.dart';
 import 'package:pumped/state/shows/shows_state.dart';
+import 'package:pumped/widgets/notifications/notify_item.dart';
 
 class NotificationsDisplay extends StatefulWidget {
   const NotificationsDisplay({super.key});
@@ -25,6 +24,7 @@ class _NotificationsDisplayState extends State<NotificationsDisplay> {
   late List<Day> days;
   late Time? time;
   late Show? selectedShow;
+  late List<bool> edit;
   @override
   void initState() {
     super.initState();
@@ -91,52 +91,10 @@ class _NotificationsDisplayState extends State<NotificationsDisplay> {
                 .firstWhereOrNull((s) => s.uid == notif.showUid);
             Slide? slide = show?.titleSlide;
             bool isText = show?.titleSlide is TextSlide;
-            return ListTile(
-              onLongPress: () => null,
-              visualDensity: const VisualDensity(horizontal: 4, vertical: 4),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              leading: IconButton(
-                icon: const Icon(Icons.alarm),
-                iconSize: 30,
-                color: notif.active ? Colors.deepOrange : Colors.black,
-                onPressed: () => notif.active
-                    ? notifyCubit.deactivate(notif)
-                    : notifyCubit.activate(notif),
-              ),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(notif.time.hhmmp()).mood(),
-                  notif.weekdays
-                      .map((day) => Text(day.abbr())
-                          .italic()
-                          .fontSize(12)
-                          .padding(right: 5))
-                      .toList()
-                      .toRow()
-                ],
-              ),
-              trailing: Container(
-                  height: 75,
-                  width: 75,
-                  decoration: BoxDecoration(
-                      color:
-                          isText ? (slide as TextSlide).backgroundColor : null,
-                      image: !isText
-                          ? DecorationImage(
-                              image: FileImage((slide as ImageSlide).image!))
-                          : null),
-                  child: isText
-                      ? AutoSizeText(
-                          (slide as TextSlide).text,
-                          maxLines: 1,
-                          style: const TextStyle(
-                              fontSize: 50,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic),
-                        ).center()
-                      : null),
+            return NotifyItem(
+              isText: isText,
+              slide: slide,
+              notif: notif,
             );
           },
         ).expanded(),
