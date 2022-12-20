@@ -5,6 +5,8 @@ import 'package:pumped/imports.dart';
 import 'package:pumped/models/show.dart';
 import 'package:pumped/services/music_player.dart';
 import 'package:pumped/services/toast.dart';
+import 'package:pumped/state/music/music_cubit.dart';
+import 'package:pumped/state/music/music_state.dart';
 import 'package:pumped/state/shows/shows_repo.dart';
 import 'package:pumped/state/shows/shows_state.dart';
 
@@ -33,17 +35,21 @@ class ShowsCubit extends Cubit<ShowsState> {
   }
 
   Future<void> playShowTune(Show show) async {
+    logger.wtf('playshowtune');
     MusicPlayer musicPlayer = getIt<MusicPlayer>();
+    logger.wtf(show.track == null);
     if (show.track == null) return;
-    await musicPlayer.play(show.track!.uri);
+    if (getIt<MusicAuthCubit>().state is! LoggedInMusicState) {
+      await getIt<MusicAuthCubit>().login(show.track!.uri);
+      await getIt<MusicAuthCubit>().connectRemote();
+    } else {
+      await getIt<MusicAuthCubit>().connectRemote();
+      musicPlayer.play(show.track!.uri);
+    }
     final seekTo = (show.songStartRatio * show.track!.durationMils).floor();
     final playFor = ((show.songEndRatio * show.track!.durationMils) -
             (show.songStartRatio * show.track!.durationMils))
         .floor();
-    if (seekTo > 0) {
-      // If i don't delay it doesn't seek.
-      await Future.delayed(const Duration(milliseconds: 100));
-    }
     await musicPlayer.seekTo(seekTo);
     timer = Timer.periodic(Duration(milliseconds: playFor), (_) async {
       await musicPlayer.seekTo(seekTo);

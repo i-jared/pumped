@@ -65,7 +65,8 @@ class _NotifyItemState extends State<NotifyItem> {
                       : null,
                   image: !widget.isText
                       ? DecorationImage(
-                          image: FileImage((widget.slide as ImageSlide).image!))
+                          image: FileImage((widget.slide as ImageSlide).image!),
+                          fit: BoxFit.cover)
                       : null),
               child: widget.isText
                   ? AutoSizeText(

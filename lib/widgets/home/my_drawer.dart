@@ -31,20 +31,20 @@ class MyDrawer extends StatelessWidget {
               icon: const Icon(Icons.alarm, color: Colors.white),
             ),
             const Divider(color: Colors.grey),
-            IconButton(
-              icon: const Icon(Icons.rocket, color: Colors.white),
-              onPressed: () => null,
-            ),
-            const Divider(color: Colors.grey),
-            IconButton(
-              icon: const Icon(Icons.search, color: Colors.white),
-              onPressed: () => getIt<NotifyRepo>().deleteAll(),
-            ),
-            const Divider(color: Colors.grey),
-            IconButton(
-              icon: const Icon(Icons.settings, color: Colors.white),
-              onPressed: () => getIt<NotifyService>().test(),
-            ),
+            // IconButton(
+            // icon: const Icon(Icons.rocket, color: Colors.white),
+            // onPressed: () => null,
+            // ),
+            // const Divider(color: Colors.grey),
+            // IconButton(
+            // icon: const Icon(Icons.search, color: Colors.white),
+            // onPressed: () => getIt<NotifyRepo>().deleteAll(),
+            // ),
+            // const Divider(color: Colors.grey),
+            // IconButton(
+            // icon: const Icon(Icons.settings, color: Colors.white),
+            // onPressed: () => getIt<NotifyService>().test(),
+            // ),
           ],
         ));
   }

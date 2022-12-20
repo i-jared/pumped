@@ -13,7 +13,9 @@ import 'package:pumped/services/music_player.dart';
 import 'package:pumped/services/my_router.dart';
 import 'package:pumped/services/toast.dart';
 import 'package:pumped/state/create_show/create_show_state.dart';
+import 'package:pumped/state/music/music_cubit.dart';
 import 'package:pumped/state/shows/shows_cubit.dart';
+import 'package:path_provider/path_provider.dart';
 
 class CreateShowCubit extends Cubit<CreateShowState> {
   Timer? timer;
@@ -53,7 +55,16 @@ class CreateShowCubit extends Cubit<CreateShowState> {
     final ImagePicker picker = ImagePicker();
 
     final XFile? xfile = await picker.pickImage(source: ImageSource.gallery);
-    final File? file = xfile?.path == null ? null : File(xfile!.path);
+    if (xfile == null) {
+      updateSlide(i, image: null);
+      return;
+    }
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String imagePath = '${appDocDir.path}/${xfile.name}';
+    await xfile.saveTo(imagePath);
+
+    logger.wtf('saved $imagePath');
+    final File file = File(imagePath);
     updateSlide(i, image: file);
   }
 
@@ -100,6 +111,9 @@ class CreateShowCubit extends Cubit<CreateShowState> {
     try {
       if (state.track == null) return false;
       MusicPlayer musicPlayer = getIt<MusicPlayer>();
+      // TODO Test connecting right here
+      await getIt<MusicAuthCubit>().connectRemote();
+      // END Test
       await musicPlayer.play(state.track!.uri);
       final seekTo = (state.songStartRatio * state.track!.durationMils).floor();
       final playFor = ((state.songEndRatio * state.track!.durationMils) -

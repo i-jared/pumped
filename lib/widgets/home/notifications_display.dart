@@ -117,10 +117,7 @@ class _NotificationsDisplayState extends State<NotificationsDisplay> {
               .textColor(Colors.white)
               .fontSize(20),
           const SizedBox(height: 10),
-          Day.values
-              .map((day) => _buildDayOfWeek(day))
-              .toList()
-              .toRow(mainAxisAlignment: MainAxisAlignment.spaceAround),
+          Day.values.map((day) => _buildDayOfWeek(day)).toList().toWrap(),
         ].toColumn(crossAxisAlignment: CrossAxisAlignment.start),
         [
           const Text('Show').bold().textColor(Colors.white).fontSize(20),
@@ -194,6 +191,7 @@ class _NotificationsDisplayState extends State<NotificationsDisplay> {
           return Container(
                   height: 75,
                   width: 75,
+                  margin: const EdgeInsets.only(right: 5),
                   decoration: BoxDecoration(
                       border: selectedShow == show
                           ? Border.all(color: Colors.deepOrange, width: 2)
@@ -202,7 +200,8 @@ class _NotificationsDisplayState extends State<NotificationsDisplay> {
                           isText ? (slide as TextSlide).backgroundColor : null,
                       image: !isText
                           ? DecorationImage(
-                              image: FileImage((slide as ImageSlide).image!))
+                              image: FileImage((slide as ImageSlide).image!),
+                              fit: BoxFit.cover)
                           : null),
                   child: isText
                       ? AutoSizeText(

@@ -1,32 +1,46 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pumped/imports.dart';
 import 'package:pumped/models/playlist.dart';
 import 'package:pumped/models/track.dart';
+import 'package:pumped/services/music_player.dart';
 import 'package:pumped/state/music/music_repo.dart';
 import 'package:pumped/state/music/music_state.dart';
 import 'package:spotify_sdk/spotify_sdk.dart';
 
 class MusicAuthCubit extends Cubit<MusicAuthState> {
   final MusicRepo authRepo;
-  MusicAuthCubit(this.authRepo) : super(LoggedOutMusicState()) {
-    login();
-  }
+  MusicAuthCubit(this.authRepo) : super(LoggedOutMusicState());
 
-  Future<void> connectRemote(String accessToken) async {
-    await SpotifySdk.connectToSpotifyRemote(
-        accessToken: accessToken,
+  Future<void> connectRemote() async {
+    try {
+      if (state is! LoggedInMusicState) return;
+      await SpotifySdk.connectToSpotifyRemote(
+        accessToken: (state as LoggedInMusicState).accessToken,
         clientId: '4e3e62a6d9634ca2a0df0776fe823b57',
         redirectUrl: 'pumped://',
-        spotifyUri: "spotify:track:fakeuri");
+      );
+    } catch (e, stack) {
+      logger.w(' error connecting', e, stack);
+      await login();
+      await SpotifySdk.connectToSpotifyRemote(
+        accessToken: (state as LoggedInMusicState).accessToken,
+        clientId: '4e3e62a6d9634ca2a0df0776fe823b57',
+        redirectUrl: 'pumped://',
+      );
+    }
   }
 
-  Future<void> login() async {
-    final accessToken = await authRepo.login();
-    await connectRemote(accessToken);
+  Future<void> login([String? spotifyUri]) async {
+    final accessToken = await authRepo.login(spotifyUri);
+    // await connectRemote(accessToken);
     emit(LoggedInMusicState(accessToken));
   }
 
   void loadPlaylists() async {
-    if (state is! LoggedInMusicState) await login();
+    if (state is! LoggedInMusicState) {
+      await login('spotify:track:7p5bQJB4XsZJEEn6Tb7EaL');
+      getIt<MusicPlayer>().pause();
+    }
     String token = (state as LoggedInMusicState).accessToken;
     emit(LoadingMusicState(token));
     List<Playlist>? playlists = await authRepo.loadPlaylists(token);

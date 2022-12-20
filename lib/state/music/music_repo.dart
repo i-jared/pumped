@@ -8,6 +8,7 @@ import 'package:spotify_sdk/spotify_sdk.dart';
 class MusicRepo {
   final Box _box;
   final String tokenString = 'token';
+  final String tokenTimeString = 'tokenTime';
   MusicRepo() : _box = Hive.box(hiveBoxName);
   Map<String, String> authHeader(String accessToken) {
     return {'Authorization': 'Bearer $accessToken'};
@@ -17,14 +18,15 @@ class MusicRepo {
     return _box.get(tokenString) as String?;
   }
 
-  Future<String> login() async {
+  Future<String> login([String? spotifyUri]) async {
     final token = await SpotifySdk.getAccessToken(
         clientId: "4e3e62a6d9634ca2a0df0776fe823b57",
         redirectUrl: "pumped://",
-        spotifyUri: "spotify:track:fakeuri",
+        spotifyUri: spotifyUri ?? '',
         scope:
             "app-remote-control,user-modify-playback-state,playlist-read-private");
     await _box.put(tokenString, token);
+    await _box.put(tokenTimeString, DateTime.now());
     return token;
   }
 
