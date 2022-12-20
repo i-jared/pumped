@@ -35,9 +35,7 @@ class ShowsCubit extends Cubit<ShowsState> {
   }
 
   Future<void> playShowTune(Show show) async {
-    logger.wtf('playshowtune');
     MusicPlayer musicPlayer = getIt<MusicPlayer>();
-    logger.wtf(show.track == null);
     if (show.track == null) return;
     if (getIt<MusicAuthCubit>().state is! LoggedInMusicState) {
       await getIt<MusicAuthCubit>().login(show.track!.uri);

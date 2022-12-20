@@ -63,7 +63,6 @@ class CreateShowCubit extends Cubit<CreateShowState> {
     String imagePath = '${appDocDir.path}/${xfile.name}';
     await xfile.saveTo(imagePath);
 
-    logger.wtf('saved $imagePath');
     final File file = File(imagePath);
     updateSlide(i, image: file);
   }
