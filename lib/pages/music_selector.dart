@@ -6,6 +6,7 @@ import 'package:pumped/models/playlist.dart';
 import 'package:pumped/state/music/music_cubit.dart';
 import 'package:pumped/state/music/music_state.dart';
 import 'package:pumped/widgets/music_selection/tracks_view.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class MusicSelector extends StatefulWidget {
   const MusicSelector({super.key});
@@ -96,10 +97,20 @@ class _MusicSelectorState extends State<MusicSelector> {
 
   Widget _buildPlaylistItem(Playlist playlist) {
     final musicCubit = context.watch<MusicAuthCubit>();
-    return Container()
-        .backgroundImage(DecorationImage(
-            image: CachedNetworkImageProvider(playlist.imageUrl)))
-        .padding(all: 5)
-        .gestures(onTap: () => musicCubit.loadPlaylistTracks(playlist));
+    return Stack(
+      children: [
+        Container()
+            .backgroundImage(DecorationImage(
+                image: CachedNetworkImageProvider(playlist.imageUrl)))
+            .padding(all: 5)
+            .gestures(onTap: () => musicCubit.loadPlaylistTracks(playlist)),
+        Positioned(
+          bottom: 10,
+          right: 10,
+          child: Image.asset('assets/spotify_icon.png', height: 30, width: 30)
+              .gestures(onTap: () => launchUrlString(playlist.spotifyLink!)),
+        )
+      ],
+    );
   }
 }

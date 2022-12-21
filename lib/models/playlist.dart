@@ -5,12 +5,15 @@ class Playlist {
   String name;
   String uri;
   String imageUrl;
+  String? spotifyLink;
 
-  Playlist(
-      {required this.id,
-      required this.name,
-      required this.uri,
-      required this.imageUrl});
+  Playlist({
+    required this.id,
+    required this.name,
+    required this.uri,
+    required this.imageUrl,
+    this.spotifyLink,
+  });
 
   factory Playlist.fromSpotifyJson(Map<String, dynamic> json) => Playlist(
         id: json['id'],
@@ -18,6 +21,7 @@ class Playlist {
             List<Map<String, dynamic>>.from(json['images']).firstOrNull?['url'],
         name: json['name'],
         uri: json['uri'],
+        spotifyLink: json['external_urls']['spotify'],
       );
 
   @override
