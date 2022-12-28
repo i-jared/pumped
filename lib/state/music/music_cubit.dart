@@ -38,8 +38,7 @@ class MusicAuthCubit extends Cubit<MusicAuthState> {
 
   void loadPlaylists() async {
     if (state is! LoggedInMusicState) {
-      await login('spotify:track:7p5bQJB4XsZJEEn6Tb7EaL');
-      getIt<MusicPlayer>().pause();
+      await login('spotify:track:doesnotexist');
     }
     String token = (state as LoggedInMusicState).accessToken;
     emit(LoadingMusicState(token));

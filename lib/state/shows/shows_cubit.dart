@@ -37,18 +37,14 @@ class ShowsCubit extends Cubit<ShowsState> {
   Future<void> playShowTune(Show show) async {
     MusicPlayer musicPlayer = getIt<MusicPlayer>();
     if (show.track == null) return;
-    if (getIt<MusicAuthCubit>().state is! LoggedInMusicState) {
-      await getIt<MusicAuthCubit>().login(show.track!.uri);
-      await getIt<MusicAuthCubit>().connectRemote();
-    } else {
-      await getIt<MusicAuthCubit>().connectRemote();
-      musicPlayer.play(show.track!.uri);
-    }
+    await getIt<MusicAuthCubit>().connectRemote();
+    musicPlayer.play(show.track!.uri);
     final seekTo = (show.songStartRatio * show.track!.durationMils).floor();
     final playFor = ((show.songEndRatio * show.track!.durationMils) -
             (show.songStartRatio * show.track!.durationMils))
         .floor();
-    await musicPlayer.seekTo(seekTo);
+    await Future.delayed(
+        const Duration(milliseconds: 200), () => musicPlayer.seekTo(seekTo));
     timer = Timer.periodic(Duration(milliseconds: playFor), (_) async {
       await musicPlayer.seekTo(seekTo);
     });
