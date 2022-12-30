@@ -97,19 +97,29 @@ class _MusicSelectorState extends State<MusicSelector> {
 
   Widget _buildPlaylistItem(Playlist playlist) {
     final musicCubit = context.watch<MusicAuthCubit>();
-    return Stack(
+    return Column(
       children: [
-        Container()
-            .backgroundImage(DecorationImage(
-                image: CachedNetworkImageProvider(playlist.imageUrl)))
-            .padding(all: 5)
-            .gestures(onTap: () => musicCubit.loadPlaylistTracks(playlist)),
-        Positioned(
-          bottom: 10,
-          right: 10,
-          child: Image.asset('assets/spotify_icon.png', height: 30, width: 30)
-              .gestures(onTap: () => launchUrlString(playlist.spotifyLink!)),
-        )
+        if (playlist.imageUrl == null) ...[
+          const Text('N/A')
+              .textColor(Colors.white)
+              .backgroundColor(Colors.black)
+              .padding(all: 5)
+              .gestures(onTap: () => musicCubit.loadPlaylistTracks(playlist)),
+        ],
+        if (playlist.imageUrl != null) ...[
+          Container()
+              .backgroundImage(DecorationImage(
+                  image: CachedNetworkImageProvider(playlist.imageUrl!)))
+              .padding(all: 5)
+              .gestures(onTap: () => musicCubit.loadPlaylistTracks(playlist))
+              .expanded(),
+        ],
+        [
+          const Text('PLAY ON SPOTIFY').fontSize(10),
+          Image.asset('assets/spotify_icon.png', height: 20, width: 20)
+        ]
+            .toRow(mainAxisAlignment: MainAxisAlignment.center)
+            .gestures(onTap: () => launchUrlString(playlist.spotifyLink!)),
       ],
     );
   }

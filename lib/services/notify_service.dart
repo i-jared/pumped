@@ -22,7 +22,7 @@ class NotifyService {
   NotifyService() {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     initializationSettingsAndroid =
-        const AndroidInitializationSettings('ic_launcher_foreground');
+        const AndroidInitializationSettings('ic_launcher_foreground1');
     initializationSettingsDarwin = DarwinInitializationSettings(
         requestAlertPermission: true,
         requestBadgePermission: true,

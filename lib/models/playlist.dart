@@ -4,14 +4,14 @@ class Playlist {
   String id;
   String name;
   String uri;
-  String imageUrl;
+  String? imageUrl;
   String? spotifyLink;
 
   Playlist({
     required this.id,
     required this.name,
     required this.uri,
-    required this.imageUrl,
+    this.imageUrl,
     this.spotifyLink,
   });
 

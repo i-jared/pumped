@@ -9,7 +9,6 @@ import 'package:pumped/state/create_show/create_show_cubit.dart';
 import 'package:pumped/state/music/music_cubit.dart';
 import 'package:pumped/state/music/music_state.dart';
 import 'package:pumped/imports.dart';
-import 'package:spotify_sdk/spotify_sdk.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -166,20 +165,8 @@ class _TracksViewState extends State<TracksView> {
                   height: 150,
                   padding: const EdgeInsets.all(10),
                   width: 150,
-                  child: Stack(
-                    children: [
-                      CachedNetworkImage(
-                          imageUrl: track.imageUrl, fit: BoxFit.cover),
-                      Positioned(
-                          bottom: 10,
-                          right: 10,
-                          child: Image.asset('assets/spotify_icon.png',
-                                  height: 30, width: 30)
-                              .gestures(
-                                  onTap: () =>
-                                      launchUrlString(track.spotifyLink!)))
-                    ],
-                  ),
+                  child: CachedNetworkImage(
+                      imageUrl: track.imageUrl, fit: BoxFit.cover),
                 ),
                 _buildTrackTitle(track, colorPair['text']!),
               ]),

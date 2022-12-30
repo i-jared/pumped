@@ -13,8 +13,8 @@ class MusicAuthCubit extends Cubit<MusicAuthState> {
 
   Future<void> connectRemote() async {
     try {
-      if (state is! LoggedInMusicState) return;
-      await SpotifySdk.connectToSpotifyRemote(
+      if (state is! LoggedInMusicState) throw Error();
+      final result = await SpotifySdk.connectToSpotifyRemote(
         accessToken: (state as LoggedInMusicState).accessToken,
         clientId: '4e3e62a6d9634ca2a0df0776fe823b57',
         redirectUrl: 'pumped://',
