@@ -6,7 +6,6 @@ import 'package:pumped/models/show.dart';
 import 'package:pumped/services/music_player.dart';
 import 'package:pumped/services/toast.dart';
 import 'package:pumped/state/music/music_cubit.dart';
-import 'package:pumped/state/music/music_state.dart';
 import 'package:pumped/state/shows/shows_repo.dart';
 import 'package:pumped/state/shows/shows_state.dart';
 

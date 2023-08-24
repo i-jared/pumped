@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "103658172245",
+    "project_id": "pumped-motivation",
+    "storage_bucket": "pumped-motivation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103658172245:android:25f92112096d4f144ac9dc",
+        "android_client_info": {
+          "package_name": "dev.pumped"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103658172245-2uil2a28buqrprnbfi3fbgr2du4sru39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByBCDMk6P2lVJCOja6heUDdoIm50KgK2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103658172245-2uil2a28buqrprnbfi3fbgr2du4sru39.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "103658172245-kiuirfklvk339rqmv0q9aksjiqb0jcu8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.pumped",
+                "app_store_id": "1658390392"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

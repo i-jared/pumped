@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pumped/imports.dart';
-import 'package:pumped/services/notify_service.dart';
+import 'package:pumped/pages/upload_display.dart';
 import 'package:pumped/state/notify/notify_cubit.dart';
-import 'package:pumped/state/notify/notify_repo.dart';
-import 'package:pumped/widgets/home/notifications_display.dart';
+import 'package:pumped/pages/notifications_display.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -31,16 +30,16 @@ class MyDrawer extends StatelessWidget {
               icon: const Icon(Icons.alarm, color: Colors.white),
             ),
             const Divider(color: Colors.grey),
-            // IconButton(
-            // icon: const Icon(Icons.rocket, color: Colors.white),
-            // onPressed: () => null,
-            // ),
-            // const Divider(color: Colors.grey),
-            // IconButton(
-            // icon: const Icon(Icons.search, color: Colors.white),
-            // onPressed: () => getIt<NotifyRepo>().deleteAll(),
-            // ),
-            // const Divider(color: Colors.grey),
+            IconButton(
+              icon: const Icon(Icons.rocket, color: Colors.white),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const UploadDisplay())),
+            ),
+            const Divider(color: Colors.grey),
+            IconButton(
+                icon: const Icon(Icons.search, color: Colors.white),
+                onPressed: () => null),
+            const Divider(color: Colors.grey),
             // IconButton(
             // icon: const Icon(Icons.settings, color: Colors.white),
             // onPressed: () => getIt<NotifyService>().test(),

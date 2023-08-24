@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +22,12 @@ import 'package:pumped/widgets/home/my_drawer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   await Hive.initFlutter();
   Hive.registerAdapter(ShowAdapter());
   Hive.registerAdapter(TextSlideAdapter());

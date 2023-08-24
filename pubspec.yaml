@@ -38,6 +38,9 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   path_provider: ^2.0.11
   url_launcher: ^6.1.7
+  cloud_firestore: ^4.8.5
+  firebase_core: ^2.15.1
+  firebase_storage: ^11.2.6
 
 dev_dependencies:
   flutter_test:
