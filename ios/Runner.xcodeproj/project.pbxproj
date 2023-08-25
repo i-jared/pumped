@@ -391,8 +391,6 @@
 					"-framework",
 					"\"image_picker_ios\"",
 					"-framework",
-					"\"path_provider_ios\"",
-					"-framework",
 					"\"spotify_sdk\"",
 					"-ObjC",
 				);
@@ -541,8 +539,6 @@
 					"-framework",
 					"\"image_picker_ios\"",
 					"-framework",
-					"\"path_provider_ios\"",
-					"-framework",
 					"\"spotify_sdk\"",
 					"-ObjC",
 				);
@@ -584,8 +580,6 @@
 					"\"SpotifyiOS\"",
 					"-framework",
 					"\"image_picker_ios\"",
-					"-framework",
-					"\"path_provider_ios\"",
 					"-framework",
 					"\"spotify_sdk\"",
 					"-ObjC",
