@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pumped/extensions/color.dart';
 import 'package:pumped/models/show.dart';
 import 'package:pumped/models/slide.dart';
 import 'package:pumped/state/uploading/uploading_state.dart';
@@ -13,7 +14,6 @@ class UploadingCubit extends Cubit<UploadingState> {
   }
 
   void init() async {
-    // TODO: get uploaded shows from firestore
     initialShows = [];
     emit(LoadedUploadingState(initialShows));
   }
@@ -22,7 +22,6 @@ class UploadingCubit extends Cubit<UploadingState> {
     var updatedShowList = List<Show>.from(state.selectedShows);
     if (updatedShowList.contains(show)) {
       if (initialShows.contains(show)) {
-        // todo: notfiy user that they can't remove this show
         return;
       }
       updatedShowList.remove(show);
@@ -33,13 +32,14 @@ class UploadingCubit extends Cubit<UploadingState> {
   }
 
   Future<void> upload() async {
+    emit(LoadingUploadingState(state.selectedShows));
     // get list of shows to upload
     var newShows = state.selectedShows
         .where((show) => !initialShows.contains(show))
         .toList();
     // upload
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference collections = firestore.collection('collections');
+    CollectionReference shows = firestore.collection('shows');
     for (var show in newShows) {
       var storageRef = FirebaseStorage.instance.ref();
       var showRef = storageRef.child(show.uid);
@@ -70,16 +70,15 @@ class UploadingCubit extends Cubit<UploadingState> {
           }
         }
       }
-      await collections.add({
+      await shows.add({
         'slides': {
           ...show.slides.mapIndexed((index, slide) => {
-                'imageUrl': urls['slides']![index],
+                'imageUrl': urls['slides']!['$index'],
                 'text': slide is TextSlide ? slide.text : null,
                 'textColor':
-                    slide is TextSlide ? slide.textColor.toString() : null,
-                'backgroundColor': slide is TextSlide
-                    ? slide.backgroundColor.toString()
-                    : null,
+                    slide is TextSlide ? slide.textColor.hexCode : null,
+                'backgroundColor':
+                    slide is TextSlide ? slide.backgroundColor.hexCode : null,
               })
         },
         'titleSlide': {
@@ -88,10 +87,10 @@ class UploadingCubit extends Cubit<UploadingState> {
               ? (show.titleSlide as TextSlide).text
               : null,
           'textColor': show.titleSlide is TextSlide
-              ? (show.titleSlide as TextSlide).textColor.toString()
+              ? (show.titleSlide as TextSlide).textColor.hexCode
               : null,
           'backgroundColor': show.titleSlide is TextSlide
-              ? (show.titleSlide as TextSlide).backgroundColor.toString()
+              ? (show.titleSlide as TextSlide).backgroundColor.hexCode
               : null,
         },
         'track': {
@@ -107,5 +106,6 @@ class UploadingCubit extends Cubit<UploadingState> {
         'songEndRatio': show.songEndRatio,
       });
     }
+    emit(LoadedUploadingState(state.selectedShows));
   }
 }

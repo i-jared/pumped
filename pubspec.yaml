@@ -41,6 +41,10 @@ dependencies:
   cloud_firestore: ^4.8.5
   firebase_core: ^2.15.1
   firebase_storage: ^11.2.6
+  image_downloader: 
+    git: 
+      url: https://github.com/ko2ic/image_downloader.git
+      ref: c1c2e3d2348c0f2ba6c399bcbca82e9ca2be37ad
 
 dev_dependencies:
   flutter_test:

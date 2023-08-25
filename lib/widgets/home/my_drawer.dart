@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pumped/imports.dart';
+import 'package:pumped/pages/download_display.dart';
 import 'package:pumped/pages/upload_display.dart';
 import 'package:pumped/state/notify/notify_cubit.dart';
 import 'package:pumped/pages/notifications_display.dart';
@@ -24,6 +25,7 @@ class MyDrawer extends StatelessWidget {
                 } else if (notifyCubit.state.hasPermission == false) {
                   // TODO: request permission somehow
                 }
+                Navigator.of(context).pop();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const NotificationsDisplay()));
               },
@@ -32,13 +34,20 @@ class MyDrawer extends StatelessWidget {
             const Divider(color: Colors.grey),
             IconButton(
               icon: const Icon(Icons.rocket, color: Colors.white),
-              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const UploadDisplay())),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const UploadDisplay()));
+              },
             ),
             const Divider(color: Colors.grey),
             IconButton(
                 icon: const Icon(Icons.search, color: Colors.white),
-                onPressed: () => null),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const DownloadDisplay()));
+                }),
             const Divider(color: Colors.grey),
             // IconButton(
             // icon: const Icon(Icons.settings, color: Colors.white),

@@ -33,4 +33,13 @@ class Track {
       durationMils: json['duration_ms'],
       spotifyLink:
           'https://open.spotify.com/track/${json['uri'].split(':')[2]}');
+
+  factory Track.fromFirestore(Map<String, dynamic> data) => Track(
+        name: data['name'],
+        artist: data['artist'],
+        uri: data['uri'],
+        imageUrl: data['imageUrl'],
+        durationMils: data['durationMils'],
+        spotifyLink: data['spotifyLink'],
+      );
 }

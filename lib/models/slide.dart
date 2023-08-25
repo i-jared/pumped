@@ -26,6 +26,14 @@ class TextSlide extends Slide {
     return TextSlide(text ?? this.text, backgroundColor ?? this.backgroundColor,
         textColor ?? this.textColor);
   }
+
+  factory TextSlide.fromFirestore(Map<String, dynamic> data) {
+    return TextSlide(
+      data['text'],
+      Color(int.parse(data['backgroundColor'], radix: 16)),
+      Color(int.parse(data['textColor'], radix: 16)),
+    );
+  }
 }
 
 @HiveType(typeId: 3)
@@ -39,6 +47,10 @@ class ImageSlide extends Slide {
 
   ImageSlide copyWith({File? image}) {
     return ImageSlide(image ?? this.image);
+  }
+
+  factory ImageSlide.fromFirestore(Map<String, dynamic> data) {
+    return ImageSlide(File(data['imageUrl']));
   }
 }
 

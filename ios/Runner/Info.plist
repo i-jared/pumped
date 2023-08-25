@@ -45,6 +45,8 @@
 		<true/>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Pumped needs to access your pictures for your motivational slides.</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Pumped needs to download shows you add from online.</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>UILaunchStoryboardName</key>
