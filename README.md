@@ -1,16 +1,8 @@
 # pumped
 
-A new Flutter project.
+flutter app for curating your mood. visual and audible catalysts to incite desired emotions.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Spotify integration not official as it violates their terms of use. at the moment it's set up to only work for my Spotify account - will accept pull requests to allow users to enter their own development Spotify app api keys. 
+in addition, you must have Spotify premium for music integration.
