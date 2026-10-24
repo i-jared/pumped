@@ -47,6 +47,7 @@ dependencies:
       ref: c1c2e3d2348c0f2ba6c399bcbca82e9ca2be37ad
 
 dev_dependencies:
+  archive: 3.3.8
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
@@ -207,3 +208,6 @@ flutter_native_splash:
   #info_plist_files:
   #  - 'ios/Runner/Info-Debug.plist'
   #  - 'ios/Runner/Info-Release.plist'
+dependency_overrides:
+  archive: 3.3.8
+  dio: 5.0.3
